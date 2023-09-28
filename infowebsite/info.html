@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,500&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,600;0,700;1,500;1,600;1,900&display=swap" rel="stylesheet">
+    <title>if Infomation</title>
+</head>
+<body>
+    <style>
+        body {
+            display: flex;
+            background-color: rgb(15, 15, 15);
+        }
+        #no {
+            font-family: 'Poppins', sans-serif;
+            margin-left: 480%;
+            color: white;
+        }
+         /*weather information*/
+        #weather {
+            font-family: 'Poppins', sans-serif;
+            top: 15.3%;
+            position: fixed;
+            display: flex;
+            margin: 0 150px;
+            border: none;
+            background-color: black;
+            color:white;
+            font-size: 50px;
+        }
+        .container {
+            text-align: center;
+        }
+        
+        .weather-container {
+            padding: 470px;
+            border-radius: 100px;
+            margin-left: 10%;
+            margin-top: 10%;
+        }
+        
+        #go {
+            font-size: 35px;
+            color: white;
+            font-family: 'Fira Code', monospace;
+            font-family: 'Kanit', sans-serif;
+            margin-top: -290%;
+            margin-left: -800%;
+        }
+        
+        .weather-info {
+            font-size: 40px;
+            font-family: 'Fira Code', monospace;
+            font-family: 'Kanit', sans-serif;
+            color: white;
+        }
+        
+        #weather-description {
+            font-size: 80px;
+            margin-left: -800%;
+        }
+        
+        #temperature {
+            font-size: 45px;
+            margin-left: -800%;
+        }
+        #btn1 {
+            top: 70%;
+            font-size: 20px;
+            margin-left: -800%;
+            background-color: tomato;
+            border:none;
+            color:white;
+            box-shadow: 0 4px 16px rgb(255, 40, 40);
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+        #news {
+            font-family: 'Poppins', sans-serif;
+            top: 9.5%;
+            position: fixed;
+            display: flex;
+            margin: 0 730px;
+            margin-top: 3%;
+            border: none;
+            background-color: black;
+            color: white;
+            font-size: 50px;
+        }
+        #stop {
+            font-family: 'Poppins', sans-serif;
+            position: fixed;
+            display: flex;
+            margin-top: -24%;
+            margin-left: 8.1%;
+            border: none;
+            background-color: black;
+            color: white;
+            font-size: 50px;
+        }
+        #google {
+            font-size: 40px;
+            margin-left: 70%;
+            margin-top: -340%;
+        }
+        #btn2 {
+            margin-top: 10%;
+            font-size: 35px;
+            margin-left: 100%;
+            margin-top: -100%;
+            background-color:rgb(220, 60, 35);
+            border:none;
+            color:black;
+            box-shadow: 0 4px 16px rgb(204, 230, 8);
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+        #naver {
+            font-size: 40px;
+            margin-top: -300%;
+            margin-left: 350%;
+        }
+        #btn3 {
+            margin-top: 9%;
+            font-size: 35px;
+            margin-left: 390%;
+            background-color: rgb(100, 217, 22);
+            border:none;
+            color:black;
+            box-shadow: 0 4px 16px rgb(52, 232, 16);
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+    </style>
+    <header>
+    <h1 id="no">Information</h1>
+    </header>
+    <article>
+        <section id="weather">
+            <ol>weather</ol>   
+        </section>
+    </article>
+    <article>
+        <section id="news">
+            <ol>news</ol>
+        </section>
+        </article>
+    <div class="container">
+        <div class="weather-container">
+            <h2 id="go">ULSAN</h2>
+            <div class="weather-info">
+                <small><p id="weather-description">날씨: </p></small>
+                <small><p id="temperature">   -°C</p></small>
+                <button id="btn1">🚨재난 대응 방법🚨</button>
+                <h2 id="stop">L.news</h2>
+                <div class="news-info">
+                <small><p id="google"><img src="google1.png"></p></small>
+                <button id="btn2">news</button>
+                <small><p id="naver"><img src="네이버.png"></p></small>
+                <button id="btn3">news</button>
+                </div>
+
+    <script>
+        const apiKey = 'bb5986e67b8733f75a75bd0e8450edf5'; // OpenWeatherMap API 키
+
+// 날씨 상태에 따른 이모티콘 매핑 객체
+const weatherEmojis = {
+    'Clear': '☀️',           // 맑음
+    'Clouds': '🌤️',         // 구름 조금
+    'Partly Cloudy': '🌥️',  // 구름 중간
+    'Scattered Clouds': '🌦️', // 흐리고 비
+    'Rain': '🌧️',           // 비
+    'Thunderstorm': '⛈️',   // 천둥 번개
+    'Snow': '🌨️',           // 눈
+    'Mist': '🌫️',            // 안개
+};
+
+// OpenWeatherMap API 호출 함수
+async function fetchWeather() {
+    const city = 'Ulsan,kr'; // 날씨 정보를 가져올 도시
+    const units = 'metric';  // 온도 단위 (섭씨)
+
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`);
+        const data = await response.json();
+
+        const weatherDescription = data.weather[0].main; // API에서 main 값 사용
+        const temperature = data.main.temp;
+
+        // 날씨 상태에 따른 이모티콘 가져오기
+        const weatherEmoji = weatherEmojis[weatherDescription] || '❓';
+
+        // DOM 엘리먼트에 날씨 정보 업데이트
+        document.getElementById('weather-description').textContent = ` ${weatherEmoji}`;
+        document.getElementById('temperature').textContent = `${temperature}°C`;
+    } catch (error) {
+        console.error('날씨 정보를 가져오는 중 오류 발생:', error);
+    }
+}
+
+
+// 페이지 로드 시 날씨 정보 가져오기
+window.addEventListener('DOMContentLoaded', fetchWeather);
+
+/*재난 대응 방법*/
+document.addEventListener('DOMContentLoaded', function() {
+    const btn1 = document.getElementById('btn1');
+    
+    btn1.addEventListener('click', function() {
+        window.location.href = 'https://www.safekorea.go.kr/';
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const btn2 = document.getElementById('btn2');
+
+    btn2.addEventListener('click', function() {
+        window.location.href = 'https://news.google.com/'
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const btn3 = document.getElementById('btn3');
+
+    btn3.addEventListener('click', function() {
+        window.location.href = 'https://news.naver.com/'
+    });
+});
+    </script>
+</body>
+</html>
